@@ -1,6 +1,8 @@
 from functions import *
 import sys
 
+big_dict = load_from_list()
+
 cmds = (".list", ".wipelist", ".report", ".wipe", ".new", ".q")
 
 print ("Usage:")
@@ -23,7 +25,7 @@ while 1 < 2:
     if inp == ".wipe":
         wipe_log()
     if inp == ".new":
-        log_add()
+        list_add()
     if inp == ".q":
         sys.exit()
     if inp not in cmds:
