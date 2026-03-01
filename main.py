@@ -5,14 +5,7 @@ big_dict = load_from_list()
 
 cmds = (".list", ".wipelist", ".report", ".wipe", ".new", ".q")
 
-print ("Usage:")
-print (".list - displays list of saved food items")
-print (".wipelist - deletes list of saved food items")
-print (".report - displays weekly calorie and nutrient report")
-print (".wipe - deletes all logged consumption")
-print (".new - begins process to save a new food item to list")
-print (".q - ends the program")
-print ("Any other input will attempt to log consumption")
+usage_message()
 
 while 1 < 2:
     inp = input()

@@ -1,48 +1,61 @@
 attributes = {
         "name" : None,
         "unit" : None,
+        "calories" : 2418,
         "carbs in g" : 274,
         "fat in g" : 62,
         "fibre in g" : 30,
         "protein in g" : 206,
         "A in mcg" : 900,
-        "B1 in mg" : 1.2,
-        "B2 in mg" : 1.3,
-        "B3 in mg" : 16,
-        "B5 in mg" : 5,
-        "B6 in mg" : 1.7,
-        "B7 in mcg" : 30,
+        #"B1 in mg" : 1.2,
+        #"B2 in mg" : 1.3,
+        #"B3 in mg" : 16,
+        #"B5 in mg" : 5,
+        #"B6 in mg" : 1.7,
+        #"B7 in mcg" : 30,
         "B9 in mcg" : 400,
         "B12 in mcg" : 2.4,
         "C in mg" : 90,
         "D in mcg" : 20,
-        "E in mg" : 15,
-        "K in mcg" : 120,
-        "Calcium in mg" : 1300,
-        "Chromium in mcg" : 35,
-        "Copper in mg" : 0.9,
+        #"E in mg" : 15,
+        #"K in mcg" : 120,
+        #"Calcium in mg" : 1300,
+        #"Chromium in mcg" : 35,
+        #"Copper in mg" : 0.9,
         "Iodine in mcg" : 150,
         "Iron in mg" : 18,
         "Magnesium in mg": 420,
-        "Manganese in mg" : 2.3,
-        "Molybdenum in mcg" : 45,
-        "Phosphorus in mg" : 1250,
-        "Potassium in mg" : 4700,
-        "Selenium in mcg" : 55,
-        "Sodium in mg" : 2300,
-        "Zinc in mg" : 11,
-        "Choline in mg" : 550
+        #"Manganese in mg" : 2.3,
+        #"Molybdenum in mcg" : 45,
+        #"Phosphorus in mg" : 1250,
+        #"Potassium in mg" : 4700,
+        #"Selenium in mcg" : 55,
+        #"Sodium in mg" : 2300,
+        #"Zinc in mg" : 11,
+        #"Choline in mg" : 550
 }
 
+def usage_message():
+    print ("Usage:")
+    print (".list - displays list of saved food items")
+    print (".wipelist - deletes list of saved food items")
+    print (".report - displays weekly calorie and nutrient report")
+    print (".wipe - deletes all logged consumption")
+    print (".new - begins process to save a new food item to list")
+    print (".q - ends the program")
+    print ("Any other input will attempt to log consumption")
+
 import json
+import time
 
 def load_from_list():
-    with open('list.json', 'r') as fp:
+    with open('/home/yolo/workspace/private/nutrition/list.json', 'r') as fp:
         list_dict = json.load(fp)
         return list_dict
     
 def list_add():
-    from main import big_dict
+    #print ("began list_add")
+    big_dict = load_from_list()
     new_entry = {}
     for a in attributes:
         print (f"Enter {a}:")
@@ -50,6 +63,8 @@ def list_add():
         new_entry[a] = (inp)
     big_dict.append (new_entry)
     save_to_list(big_dict)
+    #print ("finished list_add")
+    usage_message()
     
 def display_report():
     print ("to be implemented")
@@ -62,7 +77,10 @@ def wipe_list():
 def display_list():
     print ("Logged foods:")
     list_dict = load_from_list()
-    print (list_dict)
+    for a in list_dict:
+        print (a["name"])
+    time.sleep(5)
+    usage_message()
 
 def wipe_log():
     print ("to be implemented")
@@ -73,5 +91,7 @@ def log_cons(inp):
     return None
 
 def save_to_list(dict):
-    with open('list.json', 'w') as fp:
+    #print ("began save_to_list")
+    with open('/home/yolo/workspace/private/nutrition/list.json', 'w') as fp:
         json.dump(dict, fp)
+    #print ("finished save_to_list")
