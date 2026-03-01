@@ -22,7 +22,7 @@ attributes = {
         #"Calcium in mg" : 1300,
         #"Chromium in mcg" : 35,
         #"Copper in mg" : 0.9,
-        "Iodine in mcg" : 150,
+        #"Iodine in mcg" : 150,
         "Iron in mg" : 18,
         "Magnesium in mg": 420,
         #"Manganese in mg" : 2.3,
@@ -44,6 +44,9 @@ def usage_message():
     print (".new - begins process to save a new food item to list")
     print (".q - ends the program")
     print ("Any other input will attempt to log consumption")
+
+def sm():
+    print ("Enter a command or saved food item:")
 
 import json
 import time
@@ -72,12 +75,38 @@ def list_add():
     usage_message()
     
 def display_report():
-    print ("to be implemented")
-    return None
+    cal = carbs = fat = fibre = protein = va = vb9 = vb12 = vc = vd = iron = magnesium = 0
+    dict = load_from_list()
+    conslog = load_from_clist()
+    legal = load_legal()
+    for a in dict:
+        cal += int(a["calories"])
+        carbs += int(a["carbs in g"])
+        fat += int(a["fat in g"])
+        fibre += int(a["fibre in g"])
+        protein += int(a["protein in g"])
+        va += int(a["A in mcg"])
+        vb9 += int(a["B9 in mcg"])
+        vb12 += int(a["B12 in mcg"])
+        vc += int(a["C in mg"])
+        vd += int(a["D in mcg"])
+        iron += int(a["Iron in mg"])
+        magnesium += int(a["Magnesium in mg"])
+    print("Consumed the following:")
+    for b in conslog:
+         name = b
+         qty = conslog[b]
+         unit = legal[name]
+         print(f" - {qty} {unit} of {name}")
+
+
 
 def wipe_list():
-    print ("to be implemented")
-    return None
+    print ("This will clear all saved food items. Are you sure? [Y/n]")
+    inp = input()
+    if inp == "Y":
+        dlist = [{}]
+        save_to_list(dlist)
 
 def display_list():
     print ("Logged foods:")

@@ -8,6 +8,7 @@ cmds = (".list", ".wipelist", ".report", ".wipe", ".new", ".q")
 usage_message()
 
 while 1 < 2:
+    sm()
     inp = input()
     if inp == ".report":
         display_report()
