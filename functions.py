@@ -52,6 +52,11 @@ def load_from_list():
     with open('/home/yolo/workspace/private/nutrition/list.json', 'r') as fp:
         list_dict = json.load(fp)
         return list_dict
+
+def load_from_clist():
+    with open('/home/yolo/workspace/private/nutrition/cons_list.json', 'r') as fp:
+        clist = json.load(fp)
+        return clist
     
 def list_add():
     #print ("began list_add")
@@ -79,19 +84,51 @@ def display_list():
     list_dict = load_from_list()
     for a in list_dict:
         print (a["name"])
-    time.sleep(5)
-    usage_message()
+    #time.sleep(5)
+    #usage_message()
 
 def wipe_log():
-    print ("to be implemented")
-    return None
+    clist = {}
+    save_to_clist(clist)
+    print ("Cleared all logged consumption!")
     
 def log_cons(inp):
-    print ("to be implemented")
-    return None
+    legal = load_legal()
+    clist = load_from_clist()
+    if inp not in legal:
+        print (f"{inp} was not found in saved food items!")
+    else:
+        unit = legal[inp]
+        print (clist)
+        print (f"Enter {inp} in {unit}:")
+        qty = input()
+        if qty.isdecimal() == True:
+            iqty = int(qty)
+        else:
+            print ("input must be a whole number!")
+            return
+        if inp in clist:
+            clist[inp] += iqty
+        else:
+            clist[inp] = iqty
+        print (f"Logged {iqty} {unit} of {inp}!")
+    save_to_clist(clist)
 
 def save_to_list(dict):
     #print ("began save_to_list")
     with open('/home/yolo/workspace/private/nutrition/list.json', 'w') as fp:
         json.dump(dict, fp)
     #print ("finished save_to_list")
+
+def save_to_clist(clist):
+    with open('/home/yolo/workspace/private/nutrition/cons_list.json', 'w') as fp:
+        json.dump(clist, fp)
+
+def load_legal():
+    list_dict = load_from_list()
+    legal = {}
+    for a in list_dict:
+        b = a["name"]
+        c = a["unit"]
+        legal[b] = c
+    return legal
